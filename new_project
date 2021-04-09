@@ -2,23 +2,58 @@
 2. Заходим в папку проекта
 3. Cоздаем файл requirements.txt указываем все библиотеки, которые используем (желательного указывать версии через "==")
     Django==3.1
-    psycopg2-binary==2.8.6
-    Pillow==7.1
+    psycopg2-binary==2.8.6 - библиотека отвечает для работы с БД
+    Pillow==7.1 - для обработки картинки
 4. Создаем виртуальное окружение -> python3 -m venv env(название окружения)
 5. Активация окружения -> source env(название окружения)/bin/activate
 6. Устанавливаем библиотеки -> pip install -r requirements.txt
 7. pip freeze - Проверяем версии и библиотеки, которые мы установили
 8. Создаем Django проект
-    django-admin startproject название_проекта .
+    django-admin startproject название_проекта . - чтобы не было вложенностей
 9.Создать БД проекта в psql
 Сделать настройки проекта
 10. Определяем структуру нашего проекта (создаем "модули")
 11. Создаем приложения для "модулей" (application)
     python manage.py startapp имя_приложение
-    Зарегестрировать приложение
+    Зарегестрировать приложение - в корневой папке - setting.py - Installed APPS пишем 'имя_прилодения'
 12. Определяем сущности (какие объекты, как и счем они взаимодействуют)
 13. Определяем модель(сущность) пользователя - (либо используем стандартную модель, либо создаем кастомную/свою)
+заходим в models.py и создаем класс, который будет таблицей в БД
 14. Деляем миграцию (из пайтон классов сделать таблицу в БД)
-    python manage.py makemigrations
-    python manage.py migrate
+    python manage.py makemigrations - создает папку с таблицами
+    python manage.py migrate - создаем БД с таблицами из makemigrations
+15.
+    python manage.py runserver
+16. Создаем свой юзер
+    python manage.py createsuperuser
+17. Регистрируем таблицы в админской части
+в папке где есть модель, заходим в admin.py
+from django.contrib import admin
+from .models import Category, Product
+admin.site.register(Category)
+admin.site.register(Product)
+
+18. заходим в views и там создаем функции с классами из models.py
+
+
+
+
+# queryset (список объектов данного класса) результат = [category1, category2, category3]
+# обработчик запроса, представление (view)
+# objects - страндартный менеджер модели
+# Product.objects.all() == SELECT * FROM Product;
+
+___________MVC(MVT)_________ - прочесть
+шаблоны проектирования проектов
+Model - (models.py) - отвечает за работу с БД
+DB - database
+Controller(VIEW) - формирует то что видит пользователь
+View(Template) - данные которые мы вытащили из модели
+
+return render(request, '', {'product':product}) - в фигурных скорбках контекст
+
+#TODO: Переписать все вью на классы
+#TODO: Сделать пагинацию списка товаров
+#TODO:Сделать фильтрацию
+#TODO: Сделать подобие внешнего вида(верстку)
 

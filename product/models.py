@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Category(models.Model):
     name = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, primary_key=True)
@@ -14,6 +15,7 @@ class Category(models.Model):
 # RESTRICT - не дает удалить категорию, если в ней есть продукты
 # NO_NOTHING - ничего не делает
 
+
 class Product(models.Model):
     title = models.CharField(max_length=100)
     descripiton = models.TextField()
@@ -22,6 +24,11 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='products', null=True, blank=True)
 
 
 # ORM (Object-Relation Mapping)
