@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Главная страница</title>
 </head>
-<body>
+<body bgcolor="Indigo">
     <h1>Категории:</h1>
     {% for cat in categories %}
     <p><a href="{% url 'products-list' cat.slug %}">{{cat.name}}</a></p>

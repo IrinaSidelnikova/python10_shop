@@ -16,15 +16,16 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
-from product.views import index, products_list, product_details
+from product.views import IndexPageView, ProductsListView, ProductDetailsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='index-page'),
-    path('products/<slug:category_slug>/', products_list, name='products-list'),
-    path('products/details/<int:id>', product_details, name="product-details")
+    path('accounts/', include('account.urls')),
+    path('', IndexPageView.as_view(), name='index-page'),
+    path('products/<slug:category_slug>/', ProductsListView.as_view(), name='products-list'),
+    path('products/details/<int:pk>', ProductDetailsView.as_view(), name="product-details"),
     # path('products/', products_list, name='products-list')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
